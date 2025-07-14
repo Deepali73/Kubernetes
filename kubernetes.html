@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KubeCanvas: Orchestrating the World</title>
+  <style>
+    :root {
+      --bg: #1E1E1E;
+      --primary: #00BFFF;
+      --accent: #FF9800;
+      --text: #E0E0E0;
+      --card-bg: rgba(0, 0, 0, 0.3);
+      --card-border: #00BFFF;
+    }
+
+    [data-theme="neon"] {
+      --bg: #0A0F1D;
+      --primary: #00FFF7;
+      --accent: #FF2E63;
+      --text: #EEEEEE;
+      --card-bg: rgba(255, 255, 255, 0.05);
+      --card-border: #9D00FF;
+    }
+
+    [data-theme="devops"] {
+      --bg: #0B0F19;
+      --primary: #326CE5;
+      --secondary: #90CAF9;
+      --accent: #E3F2FD;
+      --text: #ffffff;
+      --card-bg: rgba(255, 255, 255, 0.05);
+      --card-border: #90CAF9;
+    }
+
+    [data-theme="cloud"] {
+      --bg: #F5F5F5;
+      --primary: #3F51B5;
+      --accent: #009688;
+      --text: #212121;
+      --card-bg: #ffffff;
+      --card-border: #009688;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      transition: background 0.5s ease, color 0.5s ease;
+    }
+
+    header {
+      background-color: var(--card-bg);
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      color: var(--primary);
+    }
+
+    .theme-switcher {
+      margin: 10px auto;
+      text-align: center;
+    }
+
+    select {
+      padding: 8px;
+      border-radius: 6px;
+      background-color: var(--accent);
+      color: var(--text);
+      border: none;
+    }
+
+    section {
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      padding: 20px;
+      cursor: pointer;
+      overflow: hidden;
+      height: 150px;
+      border: 1px solid var(--card-border);
+      transition: all 0.4s ease-in-out;
+    }
+
+    .card.open {
+      height: auto;
+      box-shadow: 0 0 12px var(--accent);
+    }
+
+    .card h2 {
+      color: var(--primary);
+      margin-top: 0;
+    }
+
+    .card p, .card ul, .card pre {
+      display: none;
+    }
+
+    .card.open p,
+    .card.open ul,
+    .card.open pre {
+      display: block;
+    }
+
+    code {
+      background: rgba(0,0,0,0.3);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--accent);
+    }
+
+    .background-glow {
+      position: fixed;
+      top: -50px;
+      left: -50px;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+      animation: blinkGlow 4s infinite alternate;
+      filter: blur(40px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes blinkGlow {
+      0% {
+        opacity: 0.03;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.07;
+        transform: scale(1.05);
+      }
+      100% {
+        opacity: 0.03;
+        transform: scale(1);
+      }
+    }
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: var(--card-bg);
+  font-size: 1em;
+  color: var(--accent);
+  border-top: 1px solid var(--card-border);
+  margin-top: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const cards = document.querySelectorAll('.card');
+      const themeSelector = document.getElementById('themeSelector');
+
+      cards.forEach(card => {
+        card.addEventListener('click', () => {
+          card.classList.toggle('open');
+        });
+      });
+
+      themeSelector.addEventListener('change', (e) => {
+        document.documentElement.setAttribute('data-theme', e.target.value);
+      });
+    });
+  </script>
+</head>
+<body data-theme="default">
+  <div class="background-glow"></div>
+  <header>
+    <h1>🌐 KubeCanvas: Orchestrating the World</h1>
+  </header>
+  <div class="theme-switcher">
+    <label for="themeSelector">🎨 Select Theme:</label>
+    <select id="themeSelector">
+      <option value="default">🧱 DevOps Terminal</option>
+      <option value="devops">🔵 Classic Kubernetes</option>
+      <option value="cloud">☁️ Cloud Native</option>
+      <option value="neon">🌌 Futuristic Neon</option>
+    </select>
+  </div>
+  <section>
+    <div class="card">
+      <h2>💡 Why Kubernetes?</h2>
+      <p>Kubernetes was developed by Google and released in <strong>2014</strong> to orchestrate containerized applications at scale. It automates deployment, scaling, and management of containers—crucial for modern DevOps workflows.</p>
+      <p>It empowers engineering teams to achieve greater reliability, better performance, and minimal downtime.</p>
+    </div>
+    <div class="card">
+      <h2>💡 Unique Features of Kubernetes</h2>
+      <ul>
+        <li>Self-healing containers and rescheduling</li>
+        <li>Auto-scaling based on CPU/memory usage</li>
+        <li>Rolling updates and rollbacks</li>
+        <li>Built-in load balancing and service discovery</li>
+        <li>Secrets & config maps handling</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>💡 The Problem It Solves</h2>
+      <p>Before Kubernetes, managing containers and OS manually led to crashes, downtime, and developer frustration. Kubernetes ensures automatic pod recreation when one crashes—keeping services alive, reducing costs, and increasing user trust.</p>
+    </div>
+    <div class="card">
+      <h2>💡 Core Components</h2>
+      <ul>
+        <li><strong>Minikube:</strong> A tool to run Kubernetes locally using Docker or VirtualBox</li>
+        <li><strong>kubectl:</strong> CLI to interact with Kubernetes clusters</li>
+        <li><strong>Pods:</strong> Smallest deployable units holding containers</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>💡 Key Commands</h2>
+      <ul>
+        <li><code>minikube start</code> — Start Kubernetes locally</li>
+        <li><code>kubectl get pods</code> — View running pods</li>
+        <li><code>kubectl create deployment myapp --image=imagename</code></li>
+        <li><code>kubectl describe pods myapp</code> — Debug pods</li>
+        <li><code>kubectl delete pod myapp</code> — Auto recreate via deployment</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>💡 Why Companies Choose Kubernetes</h2>
+      <p>Kubernetes helps manage microservices, automate CI/CD, and scale apps effortlessly. Companies like Netflix, Spotify, and Shopify use it to ensure speed, stability, and uptime across the globe.</p>
+      <ul>
+        <li>Cloud-native deployments</li>
+        <li>Vendor-neutral flexibility</li>
+        <li>Easy rollback and updates</li>
+      </ul>
+    </div>
+<div class="card">
+  <h2>💡 Labels & Selectors in Kubernetes</h2>
+  <p><strong>Labels</strong> are key-value pairs attached to Kubernetes objects like pods, nodes, and deployments. They help organize and select subsets of objects. <strong>Selectors</strong> are used to filter those objects based on labels.</p>
+  <p>This is useful for grouping objects for service discovery, load balancing, and scaling.</p>
+  <ul>
+    <li>🔹 <strong>Load Balancing:</strong> Services use labels to send traffic to the right pods.</li>
+    <li>🔹 <strong>Service Discovery:</strong> Automatically connects components based on labels.</li>
+    <li>🔹 <strong>Resource Scaling:</strong> Scale specific sets of pods using label selectors.</li>
+    <li>🔹 <strong>Pod Identification & Grouping:</strong> Easily apply changes to a group of similar pods.</li>
+  </ul>
+</div>
+<div class="card">
+  <h2>💡 Kubernetes Deployment</h2>
+  <p>A <strong>Deployment</strong> in Kubernetes manages the creation, updating, and scaling of a set of pods. It ensures that the desired number of pods are always running and automatically replaces failed pods.</p>
+  <p>It wraps around ReplicaSets and provides declarative updates to pods over time.</p>
+  <ul>
+    <li>✅ <strong>Manages lifecycle:</strong> Ensures the right number of pods are running.</li>
+    <li>✅ <strong>Horizontal scaling:</strong> Easily scale applications up or down.</li>
+    <li>✅ <strong>Rolling updates:</strong> Deploy new versions of apps with zero downtime.</li>
+    <li>✅ <strong>Self-healing:</strong> Automatically replaces failed pods.</li>
+    <li>❌ <strong>Not for external exposure:</strong> Use Services or Ingress instead.</li>
+  </ul>
+</div>
+<div class="card">
+  <h2>💡 What is a <code>.yml</code> File?</h2>
+  <p>A <code>.yml</code> (YAML) file in Kubernetes is used to define configuration for objects such as Pods, Services, Deployments, ConfigMaps, etc. It's declarative and human-readable.</p>
+  <p>Instead of using CLI commands every time, YAML lets you describe desired infrastructure and apply it via:</p>
+  <pre><code>kubectl apply -f filename.yml</code></pre>
+  <p>This ensures consistency and version control for infrastructure.</p>
+</div>
+<div class="card">
+  <h2>💡 What are Replicas?</h2>
+  <p><strong>Replicas</strong> in Kubernetes define how many identical copies of a Pod you want running at any given time. This ensures fault-tolerance, load balancing, and high availability.</p>
+  <p>If a pod fails or crashes, the ReplicaSet controller ensures that a new pod is automatically created to maintain the desired count.</p>
+  <ul>
+    <li>🔹 <strong>Availability:</strong> Keeps services running even if some pods fail.</li>
+    <li>🔹 <strong>Scaling:</strong> Easily increase/decrease app capacity.</li>
+    <li>🔹 <strong>Load Distribution:</strong> Balances user traffic across replicas.</li>
+    <li>🔹 <strong>Redundancy:</strong> Helps during node or pod failures.</li>
+  </ul>
+</div>
+<div class="card">
+  <h2>💡 Services, Ingress & Secrets in Kubernetes</h2>
+  <ul>
+    <li><strong>Services:</strong> Kubernetes Services expose a set of Pods as a network service. They allow other components (inside or outside the cluster) to communicate with Pods without worrying about Pod IP changes. Common types include <code>ClusterIP</code>, <code>NodePort</code>, and <code>LoadBalancer</code>.</li>
+
+    <li><strong>Ingress:</strong> Ingress is an API object that manages external access to services, typically HTTP/HTTPS. It allows fine-grained routing rules (like domain-based or path-based routing) using a single IP, making your app more accessible and scalable.</li>
+
+    <li><strong>Secrets:</strong> Kubernetes Secrets securely store sensitive data such as API keys, passwords, or certificates. Unlike ConfigMaps, they’re base64-encoded and kept out of plain-text YAML files, helping secure application configurations.</li>
+  </ul>
+  <p><strong>Use Case:</strong> A web app exposed via Ingress routes traffic to backend services and uses Secrets to securely connect to a database or third-party APIs.</p>
+</div>
+
+    <div class="card">
+      <h2>💡 Case Study: Shopify</h2>
+      <p>Shopify adopted Kubernetes to manage peak traffic—especially during Black Friday. Before that, they struggled with scaling and slow deployments.</p>
+      <p>Using Kubernetes, they moved to a microservices model with thousands of pods handling over <strong>10 million requests per minute</strong>. Even during code changes, updates were smooth and users never saw a service drop.</p>
+      <p>The result? Lower downtime, higher reliability, and reduced operational costs. Kubernetes enabled a transformation that empowered engineers and satisfied customers worldwide.</p>
+    </div>   
+  </section>
+<footer>
+           Made with ❤️ Deepali Verma
+            <h4>This interactive Kubernetes knowledge board is brought to life with attention to detail and the joy of learning — crafted with curiosity, creativity, and code by me.</h4>
+
+       </footer>
+</body>
+</html>
